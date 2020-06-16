@@ -52,10 +52,6 @@ Toolkit.run(async (tools) => {
     newVersion = `${process.env['INPUT_TAG-PREFIX']}${newVersion}`;
     console.log('new version:', newVersion);
 
-    const remoteRepo = `https://bambee-bot:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
-    console.log(process.env.GITHUB_USER);
-    console.log(Buffer.from(remoteRepo).toString('base64'));
-
     if (process.env[`skip-tag`] === 'true') {
       await tools.exec(`git push --tags`);
     } else {
