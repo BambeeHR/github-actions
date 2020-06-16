@@ -13,7 +13,6 @@ inputs:
     required: false
   skip-tag:
     description: 'Set this to prevent creating a git tag when creating a new version'
-    default: false
     required: false
   PACKAGEJSON_DIR:
     description: 'Custom dir to the package'

@@ -50,8 +50,8 @@ Toolkit.run(async (tools) => {
     newVersion = `${process.env['INPUT_TAG-PREFIX']}${newVersion}`;
     console.log('new version:', newVersion);
 
-    if (process.env[`skip-tag`] === 'true') {
-      await tools.exec(`git push --tags`);
+    if (process.env['skip-tag']) {
+      await tools.exec(`git push`);
     } else {
       await tools.exec(`git tag ${newVersion}`);
       await tools.exec(`git push --follow-tags`);
