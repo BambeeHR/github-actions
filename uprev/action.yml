@@ -11,8 +11,8 @@ inputs:
     description: 'Prefix that is used for the git tag'
     default: ''
     required: false
-  skip-tag:
-    description: 'Set this to prevent creating a git tag when creating a new version'
+  tag-revision:
+    description: 'Set this to true in order to tag this up-rev'
     required: false
   PACKAGEJSON_DIR:
     description: 'Custom dir to the package'

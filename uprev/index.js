@@ -50,13 +50,13 @@ Toolkit.run(async (tools) => {
     newVersion = `${process.env['INPUT_TAG-PREFIX']}${newVersion}`;
     console.log('new version:', newVersion);
 
-    if (process.env['skip-tag']) {
-      await tools.exec(`git push`);
-    } else {
+    if (process.env['tag-revision'] === 'true') {
       await tools.exec(`git tag ${newVersion}`);
       await tools.exec(`git push --follow-tags`);
       await tools.exec(`git push --tags`);
-    }
+    } else {
+      await tools.exec(`git push`);
+    } 
   } catch (e) {
     tools.log.fatal(e);
     tools.exit.failure('Failed to bump version');
