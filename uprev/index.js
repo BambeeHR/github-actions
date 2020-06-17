@@ -16,7 +16,8 @@ Toolkit.run(async (tools) => {
 
   const isNoop = messages.map(message => message.toLowerCase().includes('skip-uprev')).includes(true);
   if (isNoop) {
-    return tools.exit.success('Skipping Uprev!');
+    tools.exit.success('Skipping Uprev!');
+    return;
   }
   const commitMessage = 'version bump to';
   const isVersionBump = messages.map((message) => message.toLowerCase().includes(commitMessage)).includes(true);
