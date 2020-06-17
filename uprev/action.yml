@@ -14,6 +14,12 @@ inputs:
   tag-revision:
     description: 'Set this to true in order to tag this up-rev'
     required: false
+  username:
+    description: 'set to override GITHUB_USER in the merge commit'
+    required: false
+  email:
+    description: 'set to override GITHUB_EMAIL in the merge commit'
+    required: false
   PACKAGEJSON_DIR:
     description: 'Custom dir to the package'
     default: ''

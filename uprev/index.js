@@ -14,6 +14,10 @@ Toolkit.run(async (tools) => {
 
   const messages = event.commits.map((commit) => commit.message + '\n' + commit.body);
 
+  const isNoop = message.map(message => message.toLowerCase().match(/skip\-uprev/)).includes(true);
+  if (isNoop) {
+    return tools.exit.success('Skipping Uprev!');
+  }
   const commitMessage = 'version bump to';
   const isVersionBump = messages.map((message) => message.toLowerCase().includes(commitMessage)).includes(true);
   if (isVersionBump) {
@@ -29,8 +33,8 @@ Toolkit.run(async (tools) => {
   try {
     const current = pkg.version.toString();
     // set git user
-    await tools.exec(`git config user.name "${process.env.GITHUB_USER || 'Automated Version Bump'}"`);
-    await tools.exec(`git config user.email "${process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`);
+    await tools.exec(`git config user.name "${process.env.username || process.env.GITHUB_USER || 'Automated Version Bump'}"`);
+    await tools.exec(`git config user.email "${process.env.email || process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`);
 
     const currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
     console.log('currentBranch:', currentBranch);
