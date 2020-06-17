@@ -14,7 +14,7 @@ Toolkit.run(async (tools) => {
 
   const messages = event.commits.map((commit) => commit.message + '\n' + commit.body);
 
-  const isNoop = messages.map(message => message.toLowerCase().match(/skip\-uprev/)).includes(true);
+  const isNoop = messages.map(message => message.toLowerCase().includes('skip-uprev')).includes(true);
   if (isNoop) {
     return tools.exit.success('Skipping Uprev!');
   }
