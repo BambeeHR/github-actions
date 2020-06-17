@@ -33,6 +33,9 @@ Toolkit.run(async (tools) => {
 
   try {
     const current = pkg.version.toString();
+    console.log(process.env.username);
+    console.log(process.env.email);
+    console.log(process.env['tag-revision']);
     // set git user
     await tools.exec(`git config user.name "${process.env.username || process.env.GITHUB_USER || 'Automated Version Bump'}"`);
     await tools.exec(`git config user.email "${process.env.email || process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`);
