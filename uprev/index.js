@@ -7,8 +7,11 @@ if (process.env.PACKAGEJSON_DIR) {
   process.chdir(process.env.GITHUB_WORKSPACE);
 }
 
+
+
 // Run your GitHub Action!
 Toolkit.run(async (tools) => {
+  
   const pkg = tools.getPackageJSON();
   const event = tools.context.payload;
 
@@ -33,12 +36,12 @@ Toolkit.run(async (tools) => {
 
   try {
     const current = pkg.version.toString();
-    console.log(process.env.username);
-    console.log(process.env.email);
-    console.log(process.env['tag-revision']);
+    console.log(tools.inputs.username);
+    console.log(tools.inputs.email);
+    console.log(tools.inputs['tag-revision']);
     // set git user
-    await tools.exec(`git config user.name "${process.env.username || process.env.GITHUB_USER || 'Automated Version Bump'}"`);
-    await tools.exec(`git config user.email "${process.env.email || process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`);
+    await tools.exec(`git config user.name "${tools.inputs.username || process.env.GITHUB_USER || 'Automated Version Bump'}"`);
+    await tools.exec(`git config user.email "${tools.inputs.email || process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`);
 
     const currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
     console.log('currentBranch:', currentBranch);
@@ -55,10 +58,10 @@ Toolkit.run(async (tools) => {
     await tools.exec(`npm version --allow-same-version=true --git-tag-version=false ${current}`);
     console.log('current:', current, '/', 'version:', version);
     newVersion = execSync(`npm version --git-tag-version=false ${version}`).toString().trim();
-    newVersion = `${process.env['INPUT_TAG-PREFIX']}${newVersion}`;
+    newVersion = `${tools.inputs['INPUT_TAG-PREFIX']}${newVersion}`;
     console.log('new version:', newVersion);
 
-    if (process.env['tag-revision'] === 'true') {
+    if (tools.inputs['tag-revision'] === 'true') {
       await tools.exec(`git tag ${newVersion}`);
       await tools.exec(`git push --follow-tags`);
       await tools.exec(`git push --tags`);
