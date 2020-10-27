@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "actions-toolkit": "^5.0.0"
+    "actions-toolkit": "^6.0.1"
   }
 }
